@@ -30,7 +30,7 @@ def log_in():
     u = input("Username: ")
     p = input("Password: ")
     if u in name_gp1["Username"] or u in name_gp2["Username"] or u in name_gp3["Username"]:
-        if p in name_gp1["Password"] and  p in name_gp2["Password"] or u in name_gp3["Username"]:
+        if p in name_gp1["Password"] or p in name_gp2["Password"] or u in name_gp3["Username"]:
             print("\\\\\ Log-In Successful /////")
             menu()    
         else:
@@ -58,6 +58,26 @@ def dm():
         print("Code doesn't exist")
         dm()
 
+def take_out():
+    code = int(input("Code: "))
+    if code == name_gp1["Code"]:
+        print("£" + name_gp1["Money"])
+        take = int(input("How much will you take out?: "))
+        if (name_gp1["Money"] - take == name_gp1["Money"] < 0):
+            print("Error 0x3867 // Cannot take enough money out!")
+        else:
+            print("You now have £" + str(name_gp1["Money"]) + " in the bank")
+    elif code == name_gp2["Code"]:
+        print("£" + name_gp2["Money"])
+        
+    elif code == name_gp3["Code"]:
+        print("£" + name_gp3["Money"])
+
+    
+    else:
+        print("Code doesn't exist")
+        take_out()
+
 #Basic menu function, uses global varible u to allow the use of a name outside a def for the welcome
 def menu():
     print("Welcome " + str(u) + " to the online banking system")
@@ -68,6 +88,8 @@ def menu():
 """)
     if display == "Display money" or "display money":
         dm()
+    if display == "Take out money" or "take out money":
+        take_out()
 
     else:
         menu()
