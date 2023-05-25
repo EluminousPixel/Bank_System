@@ -45,13 +45,13 @@ def log_in():
 def dm():
     code = int(input("Code: "))
     if code == name_gp1["Code"]:
-        print(name_gp1["Money"])
+        print("£" + str(name_gp1["Money"]))
         menu()
     elif code == name_gp2["Code"]:
-        print(name_gp2["Money"])
+        print("£" + str(name_gp2["Money"]))
         menu()
     elif code == name_gp3["Code"]:
-        print(name_gp3["Money"])
+        print("£" + str(name_gp3["Money"]))
         menu()
     
     else:
@@ -61,17 +61,19 @@ def dm():
 def take_out():
     code = int(input("Code: "))
     if code == name_gp1["Code"]:
-        print("£" + name_gp1["Money"])
+        print("£" + str(name_gp1["Money"]))
         take = int(input("How much will you take out?: "))
-        if (name_gp1["Money"] - take == name_gp1["Money"] < 0):
-            print("Error 0x3867 // Cannot take enough money out!")
+        if take > name_gp1["Money"]:
+            print("Error 0x3867 // Not Enough In Bank!")
+            take_out()
         else:
+            (name_gp1["Money"] - take)
             print("You now have £" + str(name_gp1["Money"]) + " in the bank")
     elif code == name_gp2["Code"]:
-        print("£" + name_gp2["Money"])
+        print("£" + str(name_gp2["Money"]))
         
     elif code == name_gp3["Code"]:
-        print("£" + name_gp3["Money"])
+        print("£" + str(name_gp3["Money"]))
 
     
     else:
@@ -81,14 +83,14 @@ def take_out():
 #Basic menu function, uses global varible u to allow the use of a name outside a def for the welcome
 def menu():
     print("Welcome " + str(u) + " to the online banking system")
-    display = input("""What would you like to do today:
-- Display money
-- Take out money
-- Deposit money
-""")
-    if display == "Display money" or "display money":
+    display = int(input("""What would you like to do today:
+1 - Display money
+2 - Take out money
+3 - Deposit money
+"""))
+    if display == 1:
         dm()
-    if display == "Take out money" or "take out money":
+    if display == 2:
         take_out()
 
     else:
