@@ -32,7 +32,7 @@ def log_in():
     u = input("Username: ")
     p = input("Password: ")
     if u in name_gp1["Username"] or u in name_gp2["Username"] or u in name_gp3["Username"]:
-        if p in name_gp1["Password"] or p in name_gp2["Password"] or u in name_gp3["Username"]:
+        if p in name_gp1["Password"] or p in name_gp2["Password"] or p in name_gp3["Password"]:
             print("\\\\\ Log-In Successful /////")
             menu()    
         else:
@@ -60,6 +60,7 @@ def dm():
         print("Code doesn't exist")
         dm()
 
+#Take out scans for the correct code and then allows the user to take out money that is less or equal to what's in their bank
 def take_out():
     code = int(input("Code: "))
     if code == name_gp1["Code"]:
@@ -67,38 +68,73 @@ def take_out():
         take = int(input("How much will you take out?: "))
         if take > name_gp1["Money"]:
             print("Error 0x3867 // Not Enough In Bank!")
-        if take == str:
-            print("Error 0x6734 // Word is not recognized")
             take_out()
         else:
             name_gp1["Money"] = name_gp1["Money"] - take
             print("You now have £" + str(name_gp1["Money"]) + " in the bank")
+            menu()
     
     elif code == name_gp2["Code"]:
         print("You have £"+ str(name_gp2["Money"]) +" in the bank")
         take = int(input("How much will you take out?: "))
         if take > name_gp2["Money"]:
             print("Error 0x3867 // Not Enough In Bank!")
-        if take == str:
-            print("Error 0x6734 // Word is not recognized")
             take_out()
         else:
             name_gp2["Money"] = name_gp2["Money"] - take
             print("You now have £" + str(name_gp2["Money"]) + " in the bank")
+            menu()
         
     elif code == name_gp3["Code"]:
         print("You have £"+ str(name_gp3["Money"]) +" in the bank")
         take = int(input("How much will you take out?: "))
         if take > name_gp1["Money"]:
             print("Error 0x3867 // Not Enough In Bank!")
-        if take == str:
-            print("Error 0x6734 // Word is not recognized")
             take_out()
         else:
             name_gp1["Money"] = name_gp1["Money"] - take
             print("You now have £" + str(name_gp1["Money"]) + " in the bank")
+            menu()
 
+    else:
+        print("Code doesn't exist")
+        take_out()
+
+def deposit():
+    code = int(input("Code: "))
+    if code == name_gp1["Code"]:
+        print("You have £"+ str(name_gp1["Money"]) +" in the bank")
+        add = int(input("How much will you put in?: "))
+        if add == 0:
+            print("Please enter a bigger value")
+            deposit()
+        else:
+            name_gp1["Money"] = name_gp1["Money"] + add
+            print("You now have £" + str(name_gp1["Money"]) + " in the bank")
+            menu()
     
+    elif code == name_gp2["Code"]:
+        print("You have £"+ str(name_gp2["Money"]) +" in the bank")
+        add = int(input("How much will you put in?: "))
+        if add == 0:
+            print("Please enter a bigger value")
+            deposit()
+        else:
+            name_gp2["Money"] = name_gp2["Money"] + add
+            print("You now have £" + str(name_gp2["Money"]) + " in the bank")
+            menu()
+        
+    elif code == name_gp3["Code"]:
+        print("You have £"+ str(name_gp3["Money"]) +" in the bank")
+        add = int(input("How much will you take out?: "))
+        if add == 0:
+            print("Error 0x3867 // Not Enough In Bank!")
+            deposit()
+        else:
+            name_gp1["Money"] = name_gp1["Money"] + add
+            print("You now have £" + str(name_gp1["Money"]) + " in the bank")
+            menu()
+
     else:
         print("Code doesn't exist")
         take_out()
@@ -110,11 +146,16 @@ def menu():
 1 - Display money
 2 - Take out money
 3 - Deposit money
+4 - Quit
 """))
     if display == 1:
         dm()
     if display == 2:
         take_out()
+    if display == 3:
+        deposit()
+    if display == 4:
+        quit()
 
     else:
         menu()
