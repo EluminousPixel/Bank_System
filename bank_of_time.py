@@ -47,13 +47,13 @@ def log_in():
 #Display Money or dm scans the dicts to look for the code and then outputs the money in the account
 def dm():
     code = int(input("Code: "))
-    if code == name_gp1["Code"]:
+    if code == name_gp1["Code"] and u in name_gp1["Username"]:
         print("£" + str(name_gp1["Money"]))
         menu()
-    elif code == name_gp2["Code"]:
+    elif code == name_gp2["Code"] and u in name_gp2["Username"]:
         print("£" + str(name_gp2["Money"]))
         menu()
-    elif code == name_gp3["Code"]:
+    elif code == name_gp3["Code"] and u in name_gp3["Username"]:
         print("£" + str(name_gp3["Money"]))
         menu()
     
@@ -104,7 +104,7 @@ def take_out():
 
 def deposit():
     code = int(input("Code: "))
-    if code == name_gp1["Code"]:
+    if code == name_gp1["Code"] and u in name_gp1["Username"]:
         print("You have £"+ str(name_gp1["Money"]) +" in the bank")
         add = int(input("How much will you put in?: "))
         if add == 0:
@@ -115,7 +115,7 @@ def deposit():
             print("You now have £" + str(name_gp1["Money"]) + " in the bank")
             menu()
     
-    elif code == name_gp2["Code"]:
+    elif code == name_gp2["Code"] and u in name_gp2["Username"]:
         print("You have £"+ str(name_gp2["Money"]) +" in the bank")
         add = int(input("How much will you put in?: "))
         if add == 0:
@@ -126,7 +126,7 @@ def deposit():
             print("You now have £" + str(name_gp2["Money"]) + " in the bank")
             menu()
         
-    elif code == name_gp3["Code"]:
+    elif code == name_gp3["Code"] and u in name_gp3["Username"]:
         print("You have £"+ str(name_gp3["Money"]) +" in the bank")
         add = int(input("How much will you take out?: "))
         if add == 0:
@@ -169,14 +169,14 @@ def menu():
 def sign_up():
     new_u = input("Enter new username: ")
     new_p = input("Enter new password: ")
-    new_c = input("Enter new code: ")
-    if new_u in name_gp1["Username"] or name_gp2["Username"]:
+    new_c = int(input("Enter new code: "))
+    if new_u in name_gp1["Username"] or new_u in name_gp2["Username"]:
         print("Username exists")
         sign_up()
-    if new_p in name_gp1["Password"] or name_gp2["Password"]:
+    if new_p in name_gp1["Password"] or new_p in name_gp2["Password"]:
         print("Password exists")
         sign_up()
-    if new_c in name_gp1["Code"] or name_gp2["Code"]:
+    if new_c == name_gp1["Code"] or new_c == name_gp2["Code"]:
         print("Code exists")
         sign_up()    
     else:
