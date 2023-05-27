@@ -28,16 +28,17 @@ u = ""
 #The basic log-in feature which scans the dicts to see if the username and passwords are there.
 def log_in():
     global u
-    global exit
     u = input("Username: ")
     p = input("Password: ")
-    if u in name_gp1["Username"] or u in name_gp2["Username"] or u in name_gp3["Username"]:
-        if p in name_gp1["Password"] or p in name_gp2["Password"] or p in name_gp3["Password"]:
-            print("\\\\\ Log-In Successful /////")
-            menu()    
-        else:
-            print("Credentials Incorrect")
-            log_in()
+    if u in name_gp1["Username"] and p in name_gp1["Password"]:
+        print("\\\\\ Log-In Successful /////")
+        menu()
+    elif u in name_gp2["Username"] and p in name_gp2["Password"]:
+        print("\\\\\ Log-In Successful /////")
+        menu()
+    elif u in name_gp3["Username"] and p in name_gp3["Password"]:
+        print("\\\\\ Log-In Successful /////")
+        menu()
     
     else:
         print("Credentials Incorrect")
@@ -62,8 +63,9 @@ def dm():
 
 #Take out scans for the correct code and then allows the user to take out money that is less or equal to what's in their bank
 def take_out():
+    global u
     code = int(input("Code: "))
-    if code == name_gp1["Code"]:
+    if code == name_gp1["Code"] and u in name_gp1["Username"]:
         print("You have £"+ str(name_gp1["Money"]) +" in the bank")
         take = int(input("How much will you take out?: "))
         if take > name_gp1["Money"]:
@@ -74,7 +76,7 @@ def take_out():
             print("You now have £" + str(name_gp1["Money"]) + " in the bank")
             menu()
     
-    elif code == name_gp2["Code"]:
+    elif code == name_gp2["Code"] and u in name_gp2["Username"]:
         print("You have £"+ str(name_gp2["Money"]) +" in the bank")
         take = int(input("How much will you take out?: "))
         if take > name_gp2["Money"]:
@@ -85,7 +87,7 @@ def take_out():
             print("You now have £" + str(name_gp2["Money"]) + " in the bank")
             menu()
         
-    elif code == name_gp3["Code"]:
+    elif code == name_gp3["Code"] and u in name_gp3["Username"]:
         print("You have £"+ str(name_gp3["Money"]) +" in the bank")
         take = int(input("How much will you take out?: "))
         if take > name_gp1["Money"]:
@@ -97,7 +99,7 @@ def take_out():
             menu()
 
     else:
-        print("Code doesn't exist")
+        print("Code is wrong or doesn't exist")
         take_out()
 
 def deposit():
@@ -146,7 +148,8 @@ def menu():
 1 - Display money
 2 - Take out money
 3 - Deposit money
-4 - Quit
+4 - Log-in
+5 - Quit
 """))
     if display == 1:
         dm()
@@ -155,6 +158,8 @@ def menu():
     if display == 3:
         deposit()
     if display == 4:
+        log_in()
+    if display == 5:
         quit()
 
     else:
