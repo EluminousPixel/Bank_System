@@ -22,8 +22,7 @@ name_gp3 = {
     
     }
 
-u = ""
-  
+u = "" 
 
 #The basic log-in feature which scans the dicts to see if the username and passwords are there.
 def log_in():
@@ -141,6 +140,18 @@ def deposit():
         print("Code doesn't exist")
         take_out()
 
+def mort_cal():
+    loanAmount = float(input("Enter loan amount: "))
+
+    years = float(input("Years to have the loan: ")) * 12
+    
+    interestRate = float(input("Enter Interest Rate: ")) / 100 / 12
+
+    mortgagePayment = loanAmount * (interestRate * (1 + interestRate) \
+                                    ** years) / ((1 + interestRate) ** years - 1)
+    
+    print("The monthly mortgage payment is £%.2f" % mortgagePayment)
+
 #Basic menu function, uses global varible u to allow the use of a name outside a def for the welcome
 def menu():
     print("Welcome " + str(u) + " to the online banking system")
@@ -148,8 +159,9 @@ def menu():
 1 - Display money
 2 - Take out money
 3 - Deposit money
-4 - Log-in
-5 - Quit
+4 - Mortgage Calculator
+5 - Log-in
+6 - Quit
 """))
     if display == 1:
         dm()
@@ -158,8 +170,10 @@ def menu():
     if display == 3:
         deposit()
     if display == 4:
-        log_in()
+        mort_cal()
     if display == 5:
+        log_in()
+    if display == 6:
         quit()
 
     else:
