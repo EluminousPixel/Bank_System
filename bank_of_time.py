@@ -1,44 +1,27 @@
+from currencies import Currency
+
 #List of dictionaries with users log-in info
-name_gp1 = {
-    "Username": ["Pix",], 
-    "Password": ["jUmP?"],
-    "Money": 120,
-    "Code": 2385
+users = {
+    "Username": ["Pix", "Jin"], 
+    "Password": ["jUmP?", "tOy!"],
+    "Money": [120, 58],
+    "Code": [2385, 6785 ]
 }
 
-name_gp2 = {
-    "Username": ["Jin"], 
-    "Password": ["DuCkErS!"],
-    "Money": 54,
-    "Code": 6937
-
-}
-
-name_gp3 = {
-    "Username": [""], 
-    "Password": [""],
-    "Money": 0,
-    "Code": []
-    
-    }
-
-u = "" 
+u = ""
+currency = ("GBP")
 
 #The basic log-in feature which scans the dicts to see if the username and passwords are there.
 def log_in():
     global u
+    global u_i
     u = input("Username: ")
     p = input("Password: ")
-    if u in name_gp1["Username"] and p in name_gp1["Password"]:
+    u_i = [index for (index, item) in enumerate(users["Username"])if item == u]
+    p_i = [index for (index, item) in enumerate(users["Password"])if item == p]
+    if (u_i == p_i):
         print("\\\\\ Log-In Successful /////")
         menu()
-    elif u in name_gp2["Username"] and p in name_gp2["Password"]:
-        print("\\\\\ Log-In Successful /////")
-        menu()
-    elif u in name_gp3["Username"] and p in name_gp3["Password"]:
-        print("\\\\\ Log-In Successful /////")
-        menu()
-    
     else:
         print("Credentials Incorrect")
         log_in()
@@ -46,8 +29,10 @@ def log_in():
 #Display Money or dm scans the dicts to look for the code and then outputs the money in the account
 def dm():
     code = int(input("Code: "))
-    if code == name_gp1["Code"] and u in name_gp1["Username"]:
-        print("£" + str(name_gp1["Money"]))
+    c_i = [index for (index, item) in enumerate(users["Code"])if item == code]
+    m_i = [item for (index, item) in enumerate(users["Username"])if index == users["Money"]]
+    if (u_i == c_i):
+        print("£" + m_i.index(users["Money"]))
         menu()
     elif code == name_gp2["Code"] and u in name_gp2["Username"]:
         print("£" + str(name_gp2["Money"]))
@@ -184,10 +169,10 @@ def sign_up():
     new_u = input("Enter new username: ")
     new_p = input("Enter new password: ")
     new_c = int(input("Enter new code: "))
-    if new_u in name_gp1["Username"] or new_u in name_gp2["Username"]:
+    if new_u in users["Username"]:
         print("Username exists")
         sign_up()
-    if new_p in name_gp1["Password"] or new_p in name_gp2["Password"]:
+    if new_p in users["Password"]:
         print("Password exists")
         sign_up()
     if new_c == name_gp1["Code"] or new_c == name_gp2["Code"]:
