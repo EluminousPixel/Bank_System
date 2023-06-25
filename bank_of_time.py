@@ -1,5 +1,3 @@
-from currencies import Currency
-
 #List of dictionaries with users log-in info
 users = {
     "Username": ["Pix", "Jin"], 
@@ -9,7 +7,8 @@ users = {
 }
 
 u = ""
-currency = ("GBP")
+m_i = [index for (index, item) in enumerate(users["Money"])if item == code]
+value = users["Money"][m_i]
 
 #The basic log-in feature which scans the dicts to see if the username and passwords are there.
 def log_in():
@@ -19,7 +18,7 @@ def log_in():
     p = input("Password: ")
     u_i = [index for (index, item) in enumerate(users["Username"])if item == u]
     p_i = [index for (index, item) in enumerate(users["Password"])if item == p]
-    if (u_i == p_i):
+    if u_i == p_i and u and p != "":
         print("\\\\\ Log-In Successful /////")
         menu()
     else:
@@ -28,98 +27,72 @@ def log_in():
 
 #Display Money or dm scans the dicts to look for the code and then outputs the money in the account
 def dm():
+    global value
+    global code
     code = int(input("Code: "))
     c_i = [index for (index, item) in enumerate(users["Code"])if item == code]
-    m_i = [item for (index, item) in enumerate(users["Username"])if index == users["Money"]]
     if (u_i == c_i):
-        print("£" + m_i.index(users["Money"]))
-        menu()
-    elif code == name_gp2["Code"] and u in name_gp2["Username"]:
-        print("£" + str(name_gp2["Money"]))
-        menu()
-    elif code == name_gp3["Code"] and u in name_gp3["Username"]:
-        print("£" + str(name_gp3["Money"]))
-        menu()
-    
+        for m_i in range(len(users["Money"])):
+            if value != users["Money"][m_i]:
+                print("£%s\n" % str(value))
+                menu()
+            else:    
+                value = users["Money"][m_i]
+                print("£%s\n" % str(value)) 
+                menu()
     else:
         print("Code doesn't exist")
         dm()
 
 #Take out scans for the correct code and then allows the user to take out money that is less or equal to what's in their bank
 def take_out():
-    global u
     code = int(input("Code: "))
-    if code == name_gp1["Code"] and u in name_gp1["Username"]:
-        print("You have £"+ str(name_gp1["Money"]) +" in the bank")
-        take = int(input("How much will you take out?: "))
-        if take > name_gp1["Money"]:
-            print("Error 0x3867 // Not Enough In Bank!")
-            take_out()
-        else:
-            name_gp1["Money"] = name_gp1["Money"] - take
-            print("You now have £" + str(name_gp1["Money"]) + " in the bank")
-            menu()
-    
-    elif code == name_gp2["Code"] and u in name_gp2["Username"]:
-        print("You have £"+ str(name_gp2["Money"]) +" in the bank")
-        take = int(input("How much will you take out?: "))
-        if take > name_gp2["Money"]:
-            print("Error 0x3867 // Not Enough In Bank!")
-            take_out()
-        else:
-            name_gp2["Money"] = name_gp2["Money"] - take
-            print("You now have £" + str(name_gp2["Money"]) + " in the bank")
-            menu()
-        
-    elif code == name_gp3["Code"] and u in name_gp3["Username"]:
-        print("You have £"+ str(name_gp3["Money"]) +" in the bank")
-        take = int(input("How much will you take out?: "))
-        if take > name_gp1["Money"]:
-            print("Error 0x3867 // Not Enough In Bank!")
-            take_out()
-        else:
-            name_gp1["Money"] = name_gp1["Money"] - take
-            print("You now have £" + str(name_gp1["Money"]) + " in the bank")
-            menu()
-
+    c_i = [index for (index, item) in enumerate(users["Code"])if item == code]
+    m_i = [index for (index, item) in enumerate(users["Money"])if item == code]
+    if (u_i == c_i):
+        for m_i in range(len(users["Money"])):
+                if value == users["Money"][m_i]:
+                    print("You have £"+ str(value) +" in the bank")
+                    take = int(input("How much will you take out?: "))
+                    if take > value:
+                        print("Error 0x3867 // Not Enough In Bank!")
+                        take_out()
+                    else:
+                        value -= take
+                        print("You now have £" + str(value) + " in the bank\n")
+                        menu()
+                elif value < users["Money"][m_i] or value > users["Money"][m_i]:
+                    print("You have £"+ str(value) +" in the bank")
+                    take = int(input("How much will you take out?: "))
+                    if take > value:
+                        print("Error 0x3867 // Not Enough In Bank!")
+                        take_out()
+                    else:
+                        value -= take
+                        print("You now have £" + str(value) + " in the bank\n")
+                        menu()
+                else:
+                    take_out()
     else:
         print("Code is wrong or doesn't exist")
         take_out()
 
 def deposit():
     code = int(input("Code: "))
-    if code == name_gp1["Code"] and u in name_gp1["Username"]:
-        print("You have £"+ str(name_gp1["Money"]) +" in the bank")
-        add = int(input("How much will you put in?: "))
-        if add == 0:
-            print("Please enter a bigger value")
-            deposit()
-        else:
-            name_gp1["Money"] = name_gp1["Money"] + add
-            print("You now have £" + str(name_gp1["Money"]) + " in the bank")
-            menu()
-    
-    elif code == name_gp2["Code"] and u in name_gp2["Username"]:
-        print("You have £"+ str(name_gp2["Money"]) +" in the bank")
-        add = int(input("How much will you put in?: "))
-        if add == 0:
-            print("Please enter a bigger value")
-            deposit()
-        else:
-            name_gp2["Money"] = name_gp2["Money"] + add
-            print("You now have £" + str(name_gp2["Money"]) + " in the bank")
-            menu()
-        
-    elif code == name_gp3["Code"] and u in name_gp3["Username"]:
-        print("You have £"+ str(name_gp3["Money"]) +" in the bank")
-        add = int(input("How much will you take out?: "))
-        if add == 0:
-            print("Error 0x3867 // Not Enough In Bank!")
-            deposit()
-        else:
-            name_gp1["Money"] = name_gp1["Money"] + add
-            print("You now have £" + str(name_gp1["Money"]) + " in the bank")
-            menu()
+    c_i = [index for (index, item) in enumerate(users["Code"])if item == code]
+    m_i = [index for (index, item) in enumerate(users["Money"])if item == code]
+    if (u_i == c_i):
+        for m_i in range(len(users["Money"])):
+            value = users["Money"][m_i]
+            print("You have £"+ str(value) +" in the bank")
+            add = int(input("How much will you put in?: "))
+            if add == 0:
+                print("Please enter a bigger value")
+                deposit()
+            else:
+                value += add
+                print("You now have £" + str(value) + " in the bank\n")
+                menu()
 
     else:
         print("Code doesn't exist")
@@ -175,13 +148,13 @@ def sign_up():
     if new_p in users["Password"]:
         print("Password exists")
         sign_up()
-    if new_c == name_gp1["Code"] or new_c == name_gp2["Code"]:
+    if new_c == users["Code"]:
         print("Code exists")
         sign_up()    
     else:
-        name_gp3["Username"].append(new_u)
-        name_gp3["Password"].append(new_p)
-        name_gp3["Code"].append(new_c)
+        users["Username"].append(new_u)
+        users["Password"].append(new_p)
+        users["Code"].append(new_c)
         print("New Account Is Set-up")
         log_in()
 
