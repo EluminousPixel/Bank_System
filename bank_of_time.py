@@ -7,17 +7,20 @@ users = {
 }
 
 u = ""
-m_i = [index for (index, item) in enumerate(users["Money"])if item == code]
-value = users["Money"][m_i]
+value = 0
 
 #The basic log-in feature which scans the dicts to see if the username and passwords are there.
 def log_in():
     global u
     global u_i
+    global value
     u = input("Username: ")
     p = input("Password: ")
     u_i = [index for (index, item) in enumerate(users["Username"])if item == u]
     p_i = [index for (index, item) in enumerate(users["Password"])if item == p]
+    m_i = [index for (index, item) in enumerate(users["Money"])if item == u]
+    for m_i in range(len(users["Money"])):
+        value = users["Money"][m_i]
     if u_i == p_i and u and p != "":
         print("\\\\\ Log-In Successful /////")
         menu()
@@ -28,7 +31,6 @@ def log_in():
 #Display Money or dm scans the dicts to look for the code and then outputs the money in the account
 def dm():
     global value
-    global code
     code = int(input("Code: "))
     c_i = [index for (index, item) in enumerate(users["Code"])if item == code]
     if (u_i == c_i):
@@ -48,7 +50,6 @@ def dm():
 def take_out():
     code = int(input("Code: "))
     c_i = [index for (index, item) in enumerate(users["Code"])if item == code]
-    m_i = [index for (index, item) in enumerate(users["Money"])if item == code]
     if (u_i == c_i):
         for m_i in range(len(users["Money"])):
                 if value == users["Money"][m_i]:
@@ -78,6 +79,7 @@ def take_out():
         take_out()
 
 def deposit():
+    global value
     code = int(input("Code: "))
     c_i = [index for (index, item) in enumerate(users["Code"])if item == code]
     m_i = [index for (index, item) in enumerate(users["Money"])if item == code]
