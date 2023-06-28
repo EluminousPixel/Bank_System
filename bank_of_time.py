@@ -18,12 +18,12 @@ def log_in():
     p = input("Password: ")
     u_i = [index for (index, item) in enumerate(users["Username"])if item == u]
     p_i = [index for (index, item) in enumerate(users["Password"])if item == p]
-    m_i = [index for (index, item) in enumerate(users["Money"])if item == u]
-    for m_i in range(len(users["Money"])):
-        value = users["Money"][m_i]
     if u_i == p_i and u and p != "":
         print("\\\\\ Log-In Successful /////")
-        menu()
+        m_i = [index for (index, item) in enumerate(users["Money"])if item == u]
+        for m_i in range(len(users["Money"])):
+            value = users["Money"][m_i]
+            menu()
     else:
         print("Credentials Incorrect")
         log_in()
@@ -35,13 +35,14 @@ def dm():
     c_i = [index for (index, item) in enumerate(users["Code"])if item == code]
     if (u_i == c_i):
         for m_i in range(len(users["Money"])):
-            if value != users["Money"][m_i]:
+            if value == users["Money"][m_i]:
                 print("£%s\n" % str(value))
-                menu()
-            else:    
-                value = users["Money"][m_i]
+                menu()    
+            elif value < users["Money"][m_i] or value > users["Money"][m_i]:
                 print("£%s\n" % str(value)) 
                 menu()
+            else:
+                dm()
     else:
         print("Code doesn't exist")
         dm()
@@ -85,16 +86,28 @@ def deposit():
     m_i = [index for (index, item) in enumerate(users["Money"])if item == code]
     if (u_i == c_i):
         for m_i in range(len(users["Money"])):
-            value = users["Money"][m_i]
-            print("You have £"+ str(value) +" in the bank")
-            add = int(input("How much will you put in?: "))
-            if add == 0:
-                print("Please enter a bigger value")
-                deposit()
-            else:
-                value += add
-                print("You now have £" + str(value) + " in the bank\n")
-                menu()
+                if value == users["Money"][m_i]:
+                    print("You have £"+ str(value) +" in the bank")
+                    take = int(input("How much will you take out?: "))
+                    if take > value:
+                        print("Error 0x3867 // Not Enough In Bank!")
+                        take_out()
+                    else:
+                        value -= take
+                        print("You now have £" + str(value) + " in the bank\n")
+                        menu()
+                elif value < users["Money"][m_i] or value > users["Money"][m_i]:
+                    print("You have £"+ str(value) +" in the bank")
+                    take = int(input("How much will you take out?: "))
+                    if take > value:
+                        print("Error 0x3867 // Not Enough In Bank!")
+                        take_out()
+                    else:
+                        value -= take
+                        print("You now have £" + str(value) + " in the bank\n")
+                        menu()
+                else:
+                    take_out()
 
     else:
         print("Code doesn't exist")
